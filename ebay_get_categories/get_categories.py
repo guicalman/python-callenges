@@ -60,16 +60,35 @@ def category_exists():
 
     pass
 
-def get_subcategories(db_name, categories_dic):
-    query_id
+def get_subcategories(db_name, cat_id):
     sql_select="SELECT id, name, level, parent_id, best_offer, auto_pay FROM categories WHERE parent_id=? AND NOT id=?"
     conn = sqlite3.connect(db_name)
     cursor =conn.cursor()
-    cursor.execute(sql_select, (query_id,query_id))
+    cursor.execute(sql_select, (cat_id,cat_id))
     subcategories=cursor.fetchall()
-    for subcategory in subcategories:
-        print(subcategory)
-    return subcategories
+    sub_cat_list=[]
+    if subcategories==None:
+        return []
+    else:
+        for category in subcategories:
+            temp_sub_cat={}
+            temp_sub_cat['id']=category[0]
+            temp_sub_cat['name']=category[1]
+            temp_sub_cat['level']=category[2]
+            temp_sub_cat['parent_id']=category[3]
+            temp_sub_cat['best_offer']=category[4]
+            temp_sub_cat['auto_pay']=category[5]
+            sub_cat_list.append(temp_sub_cat)
+        return sub_cat_list
+
+def get_all_subcategories(category_dic, db_name):
+    id=category_dic['id']
+    level=category_dic['level']
+    sub_categories=get_subcategories(db_name,id)
+    for sub_category in sub_categories:
+
+        pass
+
 
 def get_category_dictionary(query_id, db_name):
     sql_select="SELECT id, name, level, parent_id, best_offer, auto_pay FROM categories WHERE id=?"
@@ -87,7 +106,7 @@ def get_category_dictionary(query_id, db_name):
         category_dic['parent_id']=category[3]
         category_dic['best_offer']=category[4]
         category_dic['auto_pay']=category[5]
-        category_dic['children']=[]
+        category_dic['children']=get_subcategories(db_name,category_dic['id'])
         return category_dic
 
 
