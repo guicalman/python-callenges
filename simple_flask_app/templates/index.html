@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+        function httpGetAsync(theUrl, callback) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function () {
+                if(xmlHttp.readyState==4 && xmlHttp.status == 200)
+                    callback(xmlHttp.responseText)
+            }
+            xmlHttp.open("GET", theUrl, true)
+            xmlHttp.send(null)
+        }
+        httpGetAsync('http://localhost:5000/store', function(response){
+            alert(response);
+        })
+
+    </script>
+    <meta charset="UTF-8">
+    <title>Test of the Stores</title>
+</head>
+<body>
+    <div id = "My element">
+        Hello!!
+    </div>
+
+</body>
+</html>
