@@ -79,6 +79,8 @@ def get_subcategories(db_name, cat_id):
 
 def get_all_subcategories(db_name, root_cat):
     if root_cat['level'] < '6':
+        #I am here
+        pass
 
 
 def get_category_dictionary(query_id, db_name):
